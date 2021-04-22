@@ -33,11 +33,13 @@ public:
 #ifndef __APPLE__
     virtual void processImagesCUDA();
 #endif
+
     virtual void processImagesOpenCL();
-// disable Metal since there is not yet a metal kernel
-#if defined(DISABLED__APPLE__)
+
+#if defined(__APPLE__)
     virtual void processImagesMetal();
 #endif
+
     virtual void multiThreadProcessImages(OfxRectI p_ProcWindow);
 
     void setSrcImg(OFX::Image* p_SrcImg);
@@ -112,8 +114,10 @@ void matMul(const float* y, const float* p, float** outmat)
     (*outmat)[8] = p[2] * y[6] + p[5] * y[7] + p[8] * y[8];
 }
 
+// There is no CUDA on MacOS
 #ifndef __APPLE__
-extern void RunCudaKernel(int p_Width, int p_Height, float* p_Fov, float* p_Tinyplanet, float* p_Rectilinear, const float* p_Input, float* p_Output, const float* p_RotMat, int p_Samples, bool p_Bilinear);
+extern void RunCudaKernel(int p_Width, int p_Height, float* p_Fov, float* p_Tinyplanet, float* p_Rectilinear,
+                          const float* p_Input, float* p_Output, const float* p_RotMat, int p_Samples, bool p_Bilinear);
 
 void ImageScaler::processImagesCUDA()
 {
@@ -129,8 +133,9 @@ void ImageScaler::processImagesCUDA()
 #endif
 
 //diasble Metal since there is not yet a metal kernel
-#if defined(DISABLED__APPLE__)
-extern void RunMetalKernel(int p_Width, int p_Height, float* p_Gain, const float* p_Input, float* p_Output);
+#if defined(__APPLE__)
+extern void RunMetalKernel(void* p_CmdQ, int p_Width, int p_Height, float* p_Fov, float* p_Tinyplanet, float* p_Rectilinear, const float* p_Input, float* p_Output,float* p_RotMat, int p_Samples,
+                            bool p_Bilinear);
 
 void ImageScaler::processImagesMetal()
 {
@@ -141,10 +146,11 @@ void ImageScaler::processImagesMetal()
     float* input = static_cast<float*>(_srcImg->getPixelData());
     float* output = static_cast<float*>(_dstImg->getPixelData());
 
-    RunMetalKernel(width, height, _params, input, output);
+    RunMetalKernel(_pMetalCmdQ, width, height, _fov, _tinyplanet, _rectilinear, input, output, _rotMat, _samples, _bilinear);
 }
 #endif
 
+//#if defined(__OPENCL__)
 extern void RunOpenCLKernel(void* p_CmdQ, int p_Width, int p_Height, float* p_Fov, float* p_Tinyplanet,
                             float* p_Rectilinear, const float* p_Input, float* p_Output, float* p_RotMat, int p_Samples,
                             bool p_Bilinear);
@@ -161,6 +167,8 @@ void ImageScaler::processImagesOpenCL()
     RunOpenCLKernel(_pOpenCLCmdQ, width, height, _fov, _tinyplanet, _rectilinear, input, output, _rotMat, _samples,
                     _bilinear);
 }
+//#endif
+
 
 void ImageScaler::multiThreadProcessImages(OfxRectI p_ProcWindow)
 {
@@ -263,6 +271,7 @@ void ImageScaler::multiThreadProcessImages(OfxRectI p_ProcWindow)
         }
     }
 }
+
 
 void ImageScaler::setSrcImg(OFX::Image* p_SrcImg)
 {
@@ -725,8 +734,12 @@ void Reframe360Factory::describe(OFX::ImageEffectDescriptor& p_Desc)
 
     // Setup OpenCL and CUDA render capability flags
     p_Desc.setSupportsOpenCLRender(true);
+    #ifndef __APPLE__
     p_Desc.setSupportsCudaRender(true);
-    p_Desc.setSupportsMetalRender(false);
+    #endif
+    #ifdef __APPLE__
+    p_Desc.setSupportsMetalRender(true);
+    #endif
 }
 
 static DoubleParamDescriptor* defineParam(OFX::ImageEffectDescriptor& p_Desc, const std::string& p_Name,
@@ -740,7 +753,7 @@ static DoubleParamDescriptor* defineParam(OFX::ImageEffectDescriptor& p_Desc, co
     param->setScriptName(p_Name);
     param->setHint(p_Hint);
     param->setDefault(default_value);
-	param->setRange(hardmin, hardmax);
+    param->setRange(hardmin, hardmax);
     param->setIncrement(0.1);
     param->setDisplayRange(min, max);
     param->setDoubleType(eDoubleTypePlain);
@@ -837,7 +850,7 @@ static BooleanParamDescriptor* defineBooleanParam(OFX::ImageEffectDescriptor& p_
     param->setLabels(p_Label, p_Label, p_Label);
     param->setScriptName(p_Name);
     param->setHint(p_Hint);
-    param->setDefault(default_value );
+    param->setDefault(default_value);
 
     if (p_Parent)
     {

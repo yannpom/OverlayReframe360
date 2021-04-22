@@ -73,7 +73,6 @@ private:
 #endif
 };
 
-// DLL Handle for Windows
 #ifdef _WIN64
 static HMODULE GetThisDllHandle()
 {
