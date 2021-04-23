@@ -10,19 +10,29 @@ New features and bug fixes:
 
 Enjoy!
 
-# Installation on MacOS (Intel and Apple Silicon)
+# Build on Windows
+* Install latest Visual Studio 2019
+* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version)
+* Clone GLM repository to `.\GLM` directory (https://github.com/bclarksoftware/glm.git)
+* Clone this repository to `.\Reframe360XL` directory
+* Open solution and build from VS
+
+# Build on MacOS (Intel and Apple Silicon)
 * Build tested on MacOS 11.2.3 / XCode 12.4
 * Install latest XCode from Apple App store
 * Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version)
-* clone glm repository https://github.com/bclarksoftware/glm.git
-* clone this repository
-* and build
-
+* Clone glm repository to `./GLM` directory (https://github.com/bclarksoftware/glm.git)
+* Clone this repository to `./Reframe360XL` directory
+* Build from shell with
 ````
-cd reframe360XL
+cd Reframe360XL
 make
 ````
 
-# Binary for MacOS
-* install [bundle](https://github.com/eltorio/reframe360XL/blob/master/Reframe360.ofx.bundle.zip?raw=true)
-* uncompress it and puts it to /Library/OFX/Plugins
+# Installation for Windows
+* Download the latest [release](https://github.com/LRP-sgravel/reframe360XL/releases) for Windows
+* Uncompress to `C:\Program Files\Common Files\OFX\Plugins\Reframe360`
+
+# Installation for MacOS
+* Download the latest [release](https://github.com/LRP-sgravel/reframe360XL/releases) for Mac
+* Uncompress to `/Library/OFX/Plugins`
