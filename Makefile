@@ -119,11 +119,11 @@ Reframe360Kernel.h: Reframe360Kernel.metal
 	cp $@ $(BUNDLE_DIR)
 
 macos-bin: install-universal
-	zip -r Reframe360.ofx.bundle.zip Reframe360.ofx.bundle
+	zip -r Reframe360XL_Mac.zip Reframe360.ofx.bundle
 
 clean:
 	rm -f *.o *.ofx *.zip *.metallib Reframe360Kernel.h OpenCLKernel.h
-	rm -fr Reframe360.ofx.bundle
+	rm -fdr Reframe360.ofx.bundle
 
 ifeq ($(UNAME_SYSTEM), Darwin)
 .DEFAULT_GOAL := darwin

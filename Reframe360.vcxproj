@@ -12,9 +12,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{88405F0E-918E-4523-8627-1380BC83A605}</ProjectGuid>
-    <RootNamespace>Reframe360</RootNamespace>
+    <RootNamespace>Reframe360XL</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>Reframe360</ProjectName>
+    <ProjectName>Reframe360XL</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -44,14 +44,14 @@
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Common Files\OFX\Plugins\Reframe360</OutDir>
+    <OutDir>C:\Program Files\Common Files\OFX\Plugins\Reframe360XL</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/Support/Plugins/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(CUDA_INC_PATH);../GLM;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/OpenFX-1.4/include;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/Support/include;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.2\common\inc\;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX\glm</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(CUDA_LIB_PATH);$(AMDAPPSDKROOT)/lib/x86_64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>C:\Program Files\Common Files\OFX\Plugins\Reframe360</OutDir>
+    <OutDir>C:\Program Files\Common Files\OFX\Plugins\Reframe360XL</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/Support/Plugins/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(CUDA_INC_PATH);../GLM;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/OpenFX-1.4/include;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX/Support/include;C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.2\common\inc\;C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX\glm</IncludePath>
@@ -83,9 +83,9 @@
     </Link>
     <PostBuildEvent>
       <Message>Creating bundle...</Message>
-      <Command>if not exist "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Resources" mkdir "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Resources"
-if not exist "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64" mkdir "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64"
-copy /Y "$(TargetPath)" /B "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64\Reframe360Plugin.ofx" /B</Command>
+      <Command>if not exist "$(OutDir)Reframe360XL.ofx.bundle\Contents\Resources" mkdir "$(OutDir)Reframe360XL.ofx.bundle\Contents\Resources"
+if not exist "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64" mkdir "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64"
+copy /Y "$(TargetPath)" /B "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64\Reframe360XL.ofx" /B</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -113,9 +113,9 @@ copy /Y "$(TargetPath)" /B "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64\
     </Link>
     <PostBuildEvent>
       <Message>Creating bundle...</Message>
-      <Command>if not exist "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Resources" mkdir "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Resources"
-if not exist "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64" mkdir "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64"
-copy /Y "$(TargetPath)" /B "$(OutDir)Reframe360Plugin.ofx.bundle\Contents\Win64\Reframe360Plugin.ofx" /B</Command>
+      <Command>if not exist "$(OutDir)Reframe360XL.ofx.bundle\Contents\Resources" mkdir "$(OutDir)Reframe360XL.ofx.bundle\Contents\Resources"
+if not exist "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64" mkdir "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64"
+copy /Y "$(TargetPath)" /B "$(OutDir)Reframe360XL.ofx.bundle\Contents\Win64\Reframe360XL.ofx" /B</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>

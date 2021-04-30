@@ -9,3 +9,4 @@ x64/
 *.o
 Reframe360.ofx
 .DS_Store
+*.ofx
