@@ -11,18 +11,20 @@ New features and bug fixes:
 Enjoy!
 
 # Build on Windows
-* Install latest Visual Studio 2019
-* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version)
-* Clone GLM repository to `.\GLM` directory (https://github.com/bclarksoftware/glm.git)
-* Clone this repository to `.\Reframe360XL` directory
-* Open solution and build from VS
+* Install latest Visual Studio 2019.
+* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
+* Clone GLM repository to `.\GLM` directory. (https://github.com/bclarksoftware/glm.git)
+* Clone this repository to `.\Reframe360XL` directory.
+* Install CUDA Development Toolkit 11.3.
+* Install latest Python and make sure system path are setup.
+* Open solution and build from VS.
 
 # Build on MacOS (Intel and Apple Silicon)
-* Build tested on MacOS 11.2.3 / XCode 12.4
-* Install latest XCode from Apple App store
-* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version)
-* Clone glm repository to `./GLM` directory (https://github.com/bclarksoftware/glm.git)
-* Clone this repository to `./Reframe360XL` directory
+* Build tested on MacOS 11.2.3 / XCode 12.4.
+* Install latest XCode from Apple App store.
+* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
+* Clone glm repository to `./GLM` directory. (https://github.com/bclarksoftware/glm.git)
+* Clone this repository to `./Reframe360XL` directory.
 * Build from shell with
 ````
 cd Reframe360XL
