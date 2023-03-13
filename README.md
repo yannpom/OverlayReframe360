@@ -1,4 +1,8 @@
+![](https://github.com/yannpom/OverlayReframe360/raw/master/doc/demo.gif)
+
 # OverlayReframe360
+
+## Reframe your 360 video with OpenFX Interaction Overlay
 
 This plugin is a rewrite of the excellent Reframe360XL plugin by Sylvain Gravel: https://github.com/LRP-sgravel/reframe360XL
 
@@ -20,20 +24,19 @@ Bug fixes:
 Enjoy!
 
 
-# Build on MacOS (Intel and Apple Silicon)
+## Build on MacOS (Intel and Apple Silicon)
 
 Build tested on macOS Ventura 13.2 / Resolve 18.1.
 
 - Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
 - Clone this repository:
-`git clone https://github.com/yannpom/OverlayReframe360.git`
+  - `git clone https://github.com/yannpom/OverlayReframe360.git`
 - Go into dir:
-`cd OverlayReframe360`
+  - `cd OverlayReframe360`
 - Checkout submodules
-`git submodule update --init`
+  - `git submodule update --init`
 - Build `spdlog`:
-```
-cd spdlog
+```cd spdlog
 mkdir build
 cd build
 cmake ..
@@ -41,13 +44,13 @@ make
 cd ../..
 ```
 - Build & Install (copy to `/Library/OFX/Plugins`)
-`make`
+  - `make`
 
-# Installation for MacOS
+## Installation for MacOS
 
 - Download the latest [release](https://github.com/yannpom/OverlayReframe360/releases) for Mac
 - Uncompress to `/Library/OFX/Plugins`
 
-# Installation for Windows
+## Installation for Windows
 
 Rewriting the Makefile I broke the Windows build. If you are interested by a Windows build do not hesitate to fix the Makefile and test.

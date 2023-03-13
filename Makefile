@@ -75,6 +75,7 @@ install: build/OverlayReframe360.ofx
 	mkdir -p $(BUNDLE_DIR)
 	cp build/OverlayReframe360.ofx $(BUNDLE_DIR)
 	cp -a build/OverlayReframe360.ofx.bundle /Library/OFX/Plugins/
+	zip build/OverlayReframe360.ofx.bundle.zip -r build/OverlayReframe360.ofx.bundle
 
 .DEFAULT_GOAL := all
 .PHONY: all
