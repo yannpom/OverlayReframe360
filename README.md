@@ -1,40 +1,53 @@
-# Reframe360 XL
+# OverlayReframe360
 
-This plugin is an extension of the excellent Reframe360 (http://reframe360.com/) plugin by Stefan Sietzen.  When Stefan discontinued the project and released the source code, I got to work to add features and fix bugs and it became Reframe360 XL.  XL is used to point out that new features were put in place and is also a nudge to the excellent SkaterXL game.
+This plugin is a rewrite of the excellent Reframe360XL plugin by Sylvain Gravel: https://github.com/LRP-sgravel/reframe360XL
 
-New features and bug fixes:
-- New animation curves implemented (Sine, Expo, Circular)
-- Apply animation curves to main camera parameters
-- Fix black dot in center of output
-- Update to latest libraries and Resolve 17
+The goal was to experiment with the OpenFX overlay interaction API to reframe using click&drag direcly on the video.
+I ended up completely rewriting the logic and kept only kernel part (OpenCL & Metal algorithm).
+
+Features:
+- Overlay interaction with trackpad/mouse
+- Global & individual param keyframes
+- Linear or spline interpolation between keyframes
+  - Interpolation can be different on the same keyframe for different param: you can have a linear Yaw move while doing a spline Pitch move.
+- Easy to move a keyframe position in time.
+- Duplicate existing keyframe
+- Curve viewer to view/edit each param movement over time.
+
+Bug fixes:
+- Fix Metal kernel on M1 mac.
 
 Enjoy!
 
-# Build on Windows
-* Install latest Visual Studio 2019.
-* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
-* Clone GLM repository to `.\GLM` directory. (https://github.com/bclarksoftware/glm.git)
-* Clone this repository to `.\Reframe360XL` directory.
-* Install CUDA Development Toolkit 11.3.
-* Install latest Python and make sure system path are setup.
-* Open solution and build from VS.
 
 # Build on MacOS (Intel and Apple Silicon)
-* Build tested on MacOS 11.2.3 / XCode 12.4.
-* Install latest XCode from Apple App store.
-* Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
-* Clone glm repository to `./GLM` directory. (https://github.com/bclarksoftware/glm.git)
-* Clone this repository to `./Reframe360XL` directory.
-* Build from shell with
-````
-cd Reframe360XL
-make
-````
 
-# Installation for Windows
-* Download the latest [release](https://github.com/LRP-sgravel/reframe360XL/releases) for Windows
-* Uncompress to `C:\Program Files\Common Files\OFX\Plugins\Reframe360`
+Build tested on macOS Ventura 13.2 / Resolve 18.1.
+
+- Install Blackmagic DaVinci Resolve from Blackmagic website (free or studio version).
+- Clone this repository:
+`git clone https://github.com/yannpom/OverlayReframe360.git`
+- Go into dir:
+`cd OverlayReframe360`
+- Checkout submodules
+`git submodule update --init`
+- Build `spdlog`:
+```
+cd spdlog
+mkdir build
+cd build
+cmake ..
+make
+cd ../..
+```
+- Build & Install (copy to `/Library/OFX/Plugins`)
+`make`
 
 # Installation for MacOS
-* Download the latest [release](https://github.com/LRP-sgravel/reframe360XL/releases) for Mac
-* Uncompress to `/Library/OFX/Plugins`
+
+- Download the latest [release](https://github.com/yannpom/OverlayReframe360/releases) for Mac
+- Uncompress to `/Library/OFX/Plugins`
+
+# Installation for Windows
+
+Rewriting the Makefile I broke the Windows build. If you are interested by a Windows build do not hesitate to fix the Makefile and test.

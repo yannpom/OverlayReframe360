@@ -1,0 +1,97 @@
+#include "XTouchMini.h"
+#include "utils.h"
+#include "global.h"
+#include <math.h>
+
+
+static void midi_callback(double deltatime, std::vector<unsigned char> *message, void *userData) {
+    assert(userData);
+    XTouchMini & instance = *reinterpret_cast<XTouchMini*>(userData);
+
+    if (message->size()<3) { return; }
+
+    MidiMessage msg;
+    msg.byte1 = message->at(0);
+    msg.byte2 = message->at(1);
+    msg.byte3 = message->at(2);
+
+    instance.enqueue(msg);
+    sendShiftKey();
+}
+
+
+MidiMessage::MidiMessage() {
+    time = get_microseconds();
+}
+
+
+XTouchMini::XTouchMini(RemoteControlProtocol& delegate) : _delegate(delegate) {
+    // _midi_in = new RtMidiIn();
+    // _midi_out = new RtMidiOut();
+    // _midi_in->setCallback(&midi_callback, (void *)this);
+    // _midi_in->ignoreTypes(false, false, false);
+    // _midi_in->openPort(0);
+    // _midi_out->openPort(0);
+}
+
+void XTouchMini::enqueue(MidiMessage& msg) {
+
+    _queue.push(msg);
+    printf("Queue size: %lu\n", _queue.size());
+}
+
+void XTouchMini::processQueue() {
+    printf("XTouchMini::processQueue\n");
+    while (!_queue.empty()) {
+        MidiMessage msg = _queue.front();
+        const int64_t age = get_microseconds() - msg.time;
+        if (age < MIDI_MESSAGE_MAX_AGE_MICROSECONDS) {
+            processMessage(msg);
+        } else {
+            printf("Dropping old MIDI message: %lld\n", age);
+        }
+        _queue.pop();
+    }
+}
+
+float MIDI_TO_PARAM_GAIN[6] = {
+    -1.0f,
+    +2.0f,
+    +1.0f,
+    -0.01f,
+    -0.01f,
+    -0.01f
+};
+
+void XTouchMini::processMessage(MidiMessage & msg) {
+    printf("MIDI Message: % 3d % 3d % 3d\n", msg.byte1, msg.byte2, msg.byte3);
+
+    if (msg.byte1 == 186) {
+        //VPOT
+        int delta = 64 - msg.byte3;
+
+        int param_n = msg.byte2 - 1;
+        if (param_n >= 0 && param_n < 6) {
+            float delta_f = MIDI_TO_PARAM_GAIN[param_n]*delta;
+            // TODO fix _delegate.changeParam((ParameterEnum)param_n, delta_f);
+        } else if (param_n == 6) { // Button 7
+
+        } else if (param_n == 7) { // Button 8: keyframe move
+
+        }
+    } else if (msg.byte1 == 154) { // Push button
+        int param_n = msg.byte2;
+        if (param_n >= 0 && param_n < 6) {
+            // Reset param
+            // TODO fix _delegate.changeParam((ParameterEnum)param_n, NAN);
+        }
+    }
+}
+
+void XTouchMini::setValue(ParameterEnum param, float value)
+{
+    uint8_t value_int = TRUNC_RANGE(value * 127, 0, 127);
+    uint8_t msg[3] = {186, uint8_t(param+1), value_int};
+    printf("SEND MSG\n");
+    //_midi_out->sendMessage(msg, 3);
+}

@@ -82,7 +82,7 @@ if __name__ == "__main__":
 		stringSource = stringSource.replace("\'", "\\\'") # replace '\'' in comments
 	
 	stringSource = stringSource.replace("\n", "\\n\"\n\"") # replace '\n'
-	stringSource = "const char* metal_src_" + os.path.splitext(args.inputFileName)[0] + " =\n\"" + stringSource
+	stringSource = "const char* metal_src_" + os.path.splitext(os.path.basename(args.inputFileName))[0] + " =\n\"" + stringSource
 
 	if args.compact:
 		stringSource += "\";\n"

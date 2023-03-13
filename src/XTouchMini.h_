@@ -1,0 +1,44 @@
+#pragma once
+
+//#include <rtmidi/RtMidi.h>
+#include <queue>
+#include "RemoteControlProtocol.hpp"
+
+
+class MidiMessage {
+public:
+    MidiMessage();
+    union {
+        struct {
+            uint8_t byte1;
+            uint8_t byte2;
+            uint8_t byte3;
+        };
+        uint8_t bytes[3];
+    };
+    uint64_t time;
+};
+
+
+class XTouchMini {
+
+public:
+
+    XTouchMini(RemoteControlProtocol& delegate);
+
+    void enqueue(MidiMessage& msg);
+
+    void processQueue();
+
+    void setValue(ParameterEnum param, float value);
+    
+
+private:
+    void processMessage(MidiMessage & msg);
+
+    RemoteControlProtocol & _delegate;
+    // RtMidiIn * _midi_in;
+    // RtMidiOut * _midi_out;
+    std::queue<MidiMessage> _queue;
+};
+
